@@ -1,4 +1,4 @@
-#Bitcoin Lightning Coin Specification
+<b>#Bitcoin Lightning Coin Specification</b>
 
 Coin Name : Bitcoin Lightning
 
