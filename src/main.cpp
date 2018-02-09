@@ -1368,26 +1368,41 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees)
 }
 
 // miner's coin stake reward
-const int YEARLY_BLOCKCOUNT = 36000; //36000 block will execute with in  12 months
+const int YEARLY_BLOCKCOUNT = 345600; //36000 block will execute with in  12 months
+
+const int MONTHLY_BLOCKCOUNT = 28800;
+
+/*
+ NOW : 36 MN + 12 STACK = 48 = 80 * 0.6 -> 60100
+ MONTH 1 : 48 MN + 16 STACK = 64 = 80 * 0.8 -> from 60100 to 88900
+ MONTH 2 : 60 MN + 20 STACK = 80 = 80 * 1 -> from 88900 -> 117700
+ YEAR 2 : 345600
+*/
 int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees)
 {
 	int nHeight = pindexPrev->nHeight + 1;
 	int64_t nSubsidy;
-	if (nHeight < YEARLY_BLOCKCOUNT)						// 1st year
+	if (nHeight < 36000)						// 1st year -> was 36k
 		nSubsidy = STATIC_POS_REWARD;
-	else if (nHeight < (2 * YEARLY_BLOCKCOUNT))				// 2nd year
+	else if (nHeight < 60100)				    // old 2nd year -> replaced with 60100 for fork
 		nSubsidy = STATIC_POS_REWARD * 0.6;
-	else if (nHeight < (3 * YEARLY_BLOCKCOUNT))				// 3rd year
+    else if (nHeight < 88900)                   //Correction for 1st year month 1
+        nSubsidy = STATIC_POS_REWARD * 0.8;
+    else if (nHeight < YEARLY_BLOCKCOUNT)       //correction for 1st year month 2 until the 2nd year.
+        nSubsidy = STATIC_POS_REWARD * 1;
+    else if (nHeight < (2 * YEARLY_BLOCKCOUNT)) // 2nd year
+        nSubsidy = STATIC_POS_REWARD * 0.36;
+	else if (nHeight < (3 * YEARLY_BLOCKCOUNT))	// 3rd year
 		nSubsidy = STATIC_POS_REWARD * 0.36;
-	else if (nHeight < (4 * YEARLY_BLOCKCOUNT))				// 4th year
+	else if (nHeight < (4 * YEARLY_BLOCKCOUNT))	// 4th year
 		nSubsidy = STATIC_POS_REWARD * 0.216;
-	else if (nHeight < (5 * YEARLY_BLOCKCOUNT))				// 5th year
+	else if (nHeight < (5 * YEARLY_BLOCKCOUNT))	// 5th year
 		nSubsidy = STATIC_POS_REWARD * 0.1296;
-	else if (nHeight < (6 * YEARLY_BLOCKCOUNT))				// 6th year
+	else if (nHeight < (6 * YEARLY_BLOCKCOUNT))	// 6th year
 		nSubsidy = STATIC_POS_REWARD * 0.07776;
-	else if (nHeight < (7 * YEARLY_BLOCKCOUNT))				// 7th year
+	else if (nHeight < (7 * YEARLY_BLOCKCOUNT))	// 7th year
 		nSubsidy = STATIC_POS_REWARD * 0.046656;
-	else													// 8th year
+	else										// 8th year
 		nSubsidy = 3 * COIN;
 
     return nSubsidy + nFees;
