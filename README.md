@@ -2,9 +2,9 @@
 
 Coin Name : Bitcoin Lightning
 
-Ticker : BLT
+Ticker : BLTG
 
-Coin Type : POW  + POS 
+Coin Type : POS 
 
 Algorithm : Scrypt
 
@@ -12,7 +12,7 @@ Block Time : 90 Sec Approx
 
 Block Size : 3MB 
 
-Block Reward: 80 Coin
+Block Reward: 64 Coinsincreasing to 80 at block 88900
  
 Total Coins: 70,000,000
 
